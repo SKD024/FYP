@@ -1,3 +1,5 @@
+import 'package:bookbinnepal/present/screens/Add%20product/addproduct.dart';
+import 'package:bookbinnepal/present/screens/View%20product/viewproduct.dart';
 import 'package:bookbinnepal/present/screens/homepage/homepage.dart';
 import 'package:bookbinnepal/present/screens/signup/register.dart';
 //import 'package:flutter/cupertino.dart';
