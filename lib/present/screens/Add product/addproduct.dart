@@ -1,9 +1,13 @@
 import 'dart:convert';
-
+import 'package:bookbinnepal/present/screens/Message/Message.dart';
+import 'package:bookbinnepal/present/screens/Notification/Notifications.dart';
+import 'package:bookbinnepal/present/screens/profile/Profile.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
 import '../../../productmodel.dart';
+import '../View product/viewproduct.dart';
 
 class AddProduct extends StatefulWidget {
   const AddProduct({Key? key}) : super(key: key);
@@ -31,58 +35,60 @@ class _AddProductState extends State<AddProduct> {
         headers: {'Content-Type': 'application/json'});
     print(response.statusCode);
   }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Color.fromRGBO(130, 47, 175, 1),
-        title: const Text('Add Products'),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: TextFormField(
-                controller: AddProduct.title,
-                decoration: InputDecoration(hintText: 'Title'),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Color.fromRGBO(130, 47, 175, 1),
+          title: Center(child: const Text('Add Products')),
+          automaticallyImplyLeading: false,
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: TextFormField(
+                  controller: AddProduct.title,
+                  decoration: InputDecoration(hintText: 'Title'),
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: TextFormField(
-                controller: AddProduct.description,
-                decoration: InputDecoration(hintText: 'Description'),
+              Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: TextFormField(
+                  controller: AddProduct.description,
+                  decoration: InputDecoration(hintText: 'Description'),
+                ),
               ),
-            ),
-            SizedBox(
-              width: 100,
-              child: ElevatedButton(
-                  style: ButtonStyle(
-                    overlayColor: MaterialStateProperty.all<Color>(
-                      const Color(0x82050000),
+              SizedBox(
+                width: 100,
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                      overlayColor: MaterialStateProperty.all<Color>(
+                        const Color(0x82050000),
+                      ),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(7.0),
+                      )),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                        const Color.fromRGBO(130, 47, 175, 1),
+                      ),
                     ),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(7.0),
-                    )),
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                      const Color.fromRGBO(130, 47, 175, 1),
-                    ),
-                  ),
-                  onPressed: () {
-                    addProduct();
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) =>
-                          _buildPopupDialog(context),
-                    );
-                  },
-                  child: const Text("Submit")),
-            ),
-          ],
+                    onPressed: () {
+                      addProduct();
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) =>
+                            _buildPopupDialog(context),
+                      );
+                    },
+                    child: const Text("Submit")),
+              ),
+            ],
+          ),
         ),
       ),
     );

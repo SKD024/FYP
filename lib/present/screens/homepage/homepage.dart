@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../Add product/addproduct.dart';
@@ -16,7 +16,7 @@ class _homepageState extends State<homepage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color.fromRGBO(130, 47, 175, 1),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -73,6 +73,37 @@ class _homepageState extends State<homepage> {
               ],
             ),
           ],
+        ),
+        bottomNavigationBar: CurvedNavigationBar(
+          height:50,
+          color: Colors.white,
+          backgroundColor: const Color.fromRGBO(130, 47, 175, 1),
+          buttonBackgroundColor: Colors.white,
+          items: const <Widget>[
+            Icon(Icons.add, size: 30),
+            Icon(Icons.list, size: 30),
+            Icon(Icons.chat, size: 30),
+            Icon(Icons.notifications, size: 30),
+            Icon(Icons.person, size: 30),
+          ],
+          animationDuration: const Duration(
+            milliseconds: 300
+          ),
+          onTap: (index) {
+            var page = "$index";
+            debugPrint("Current Index is $page");
+            if(page == "0"){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AddProduct()),
+              );
+            }else if( page=="1"){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => viewproduct()),
+              );
+            }
+          },
         ),
       ),
     );

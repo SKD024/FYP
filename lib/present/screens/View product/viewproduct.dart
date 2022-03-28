@@ -1,9 +1,12 @@
 import 'dart:convert';
 
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
 import '../../../productmodel.dart';
+import '../Add product/addproduct.dart';
+import '../viewdetails.dart';
 
 class viewproduct extends StatefulWidget {
   const viewproduct({Key? key}) : super(key: key);
@@ -42,26 +45,9 @@ class _viewproductState extends State<viewproduct> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Color.fromRGBO(130, 47, 175, 1),
-          title: const Text('View Products'),
+          title: Center(child: const Text('View Products')),
+          automaticallyImplyLeading: false,
         ),
-        //rawer: const NavDrawer(),
-        // body: SingleChildScrollView(
-        //   child: Column(
-        //     children: [
-        //       const SizedBox(
-        //         height: 20,
-        //       ),
-        //       const Center(
-        //         child: Text(
-        //           'Welcome To Dashboard',
-        //           style: TextStyle(fontSize: 20),
-        //         ),
-        //       ),
-        //       ElevatedButton(
-        //           onPressed: () {
-        //             _getProductList();
-        //           },
-        //           child: const Text("display")),
         body: FutureBuilder(
             future: _getProductList(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -79,6 +65,7 @@ class _viewproductState extends State<viewproduct> {
                         padding: const EdgeInsets.all(10.0),
                         child: SizedBox(
                           height: 150,
+                          child: GestureDetector(
                           child: Card(
                             shadowColor: Colors.black,
                             shape: RoundedRectangleBorder(
@@ -87,13 +74,13 @@ class _viewproductState extends State<viewproduct> {
                             color: const Color(0xFFF1F1F1),
                             child: Center(
                               child: ListTile(
-                                leading: Text(
-                                  'ID: ${snapshot.data[index].id}',
-                                  style: const TextStyle(
-                                      color: Color(0xFF003049),
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600),
-                                ),
+                                // leading: Text(
+                                //   'ID: ${snapshot.data[index].id}',
+                                //   style: const TextStyle(
+                                //       color: Color(0xFF003049),
+                                //       fontSize: 20,
+                                //       fontWeight: FontWeight.w600),
+                                // ),
                                 title: Text(
                                   'Title: ${snapshot.data[index].title}',
                                   style: const TextStyle(
@@ -110,6 +97,10 @@ class _viewproductState extends State<viewproduct> {
                                 ),
                               ),
                             ),
+                          ),
+                              onTap: () {int pId = snapshot.data[index].id;Navigator.push(context,MaterialPageRoute(builder: (context) => DetailProduct(id: pId,)),
+                              );
+                            }
                           ),
                         ),
                       );
