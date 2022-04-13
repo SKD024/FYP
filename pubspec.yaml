@@ -27,6 +27,8 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  file_picker: ^4.5.1
+  back_button_interceptor: ^5.0.2
   curved_navigation_bar: ^1.0.3
   flutter:
     sdk: flutter
@@ -37,6 +39,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^0.13.4
   provider: ^6.0.2
+  firebase_core: ^1.14.0
+  firebase_auth: ^3.3.12
+  cloud_firestore: ^3.1.10
+
 
 dev_dependencies:
   flutter_test:

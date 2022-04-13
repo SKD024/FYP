@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
@@ -29,6 +30,7 @@ class _viewproductState extends State<viewproduct> {
         id: i['id'],
         title: i['title'],
         description: i['description'],
+        image: i['image'],
       );
 
       productDetails.add(products);
@@ -44,7 +46,7 @@ class _viewproductState extends State<viewproduct> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Color.fromRGBO(130, 47, 175, 1),
+          backgroundColor: Color.fromRGBO(161, 78, 203, 1.0),
           title: Center(child: const Text('View Products')),
           automaticallyImplyLeading: false,
         ),
@@ -67,33 +69,47 @@ class _viewproductState extends State<viewproduct> {
                           height: 150,
                           child: GestureDetector(
                           child: Card(
-                            shadowColor: Colors.black,
+                            clipBehavior: Clip.antiAlias,
+                            shadowColor: Color.fromRGBO(133, 13, 189, 1.0),
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0)),
+                                borderRadius: BorderRadius.circular(15.0)),
                             elevation: 10,
-                            color: const Color(0xFFF1F1F1),
-                            child: Center(
-                              child: ListTile(
-                                // leading: Text(
-                                //   'ID: ${snapshot.data[index].id}',
-                                //   style: const TextStyle(
-                                //       color: Color(0xFF003049),
-                                //       fontSize: 20,
-                                //       fontWeight: FontWeight.w600),
-                                // ),
-                                title: Text(
-                                  'Title: ${snapshot.data[index].title}',
-                                  style: const TextStyle(
-                                      color: Color(0xFF003049),
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600),
+                            color: const Color.fromRGBO(224, 219, 236, 1.0),
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [Color.fromRGBO(155, 45, 215, 100.0), Color.fromRGBO(
+                                      220, 218, 218, 1.0)],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
                                 ),
-                                subtitle: Text(
-                                  'Description: ${snapshot.data[index].description}',
-                                  style: const TextStyle(
-                                      color: Color(0xFF003049),
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500),
+                              ),
+                              child: Center(
+                                child: ListTile(
+                                  leading: SizedBox(
+                                    height: 150,
+                                    width: 150,
+                                    child: Image.network(
+                                        '${snapshot.data[index].image}',
+                                      // height: 400,
+                                      // width: 150,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  title: Text(
+                                    'Title: ${snapshot.data[index].title}',
+                                    style: const TextStyle(
+                                        color: Color(0xFF0A0000),
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  subtitle: Text(
+                                    'Description: ${snapshot.data[index].description}',
+                                    style: const TextStyle(
+                                        color: Color(0xFF0A0000),
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500),
+                                  ),
                                 ),
                               ),
                             ),

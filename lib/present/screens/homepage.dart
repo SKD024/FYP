@@ -14,14 +14,13 @@ class Homepage extends StatefulWidget {
   State<Homepage> createState() => _HomepageState();
 }
 class _HomepageState extends State<Homepage> {
-  //final navigationkey = GlobalKey<CurvedNavigationBasrState>();
   int index = 0;
   final screens =[
-    AddProduct(),
-    viewproduct(),
-    Message(),
-    Noti(),
-    Profile(),
+    const AddProduct(),
+    const viewproduct(),
+    const Chats(),
+    const Notifications(),
+    const Profile(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -30,15 +29,15 @@ class _HomepageState extends State<Homepage> {
       bottomNavigationBar: CurvedNavigationBar(
         //key: navigationkey,
         height:50,
-        color: const Color.fromRGBO(130, 47, 175, 1),
-        backgroundColor: Colors.white,
-        buttonBackgroundColor: const Color.fromRGBO(130, 47, 175, 1),
+        color: const Color(0x9AC2C2C2),
+        backgroundColor: Colors.transparent,
+        buttonBackgroundColor: const Color.fromRGBO(174, 140, 199, 1.0),
         items: const <Widget>[
-          Icon(Icons.add, size: 30, color: Colors.white,),
-          Icon(Icons.list, size: 30,color: Colors.white,),
-          Icon(Icons.chat, size: 30,color: Colors.white,),
-          Icon(Icons.notifications, size: 30,color: Colors.white,),
-          Icon(Icons.person, size: 30,color: Colors.white,),
+          Icon(Icons.add, size: 30,),
+          Icon(Icons.list, size: 30,),
+          Icon(Icons.chat, size: 30,),
+          Icon(Icons.notifications, size: 30,),
+          Icon(Icons.person, size: 30,),
         ],
         animationDuration: const Duration(
             milliseconds: 300

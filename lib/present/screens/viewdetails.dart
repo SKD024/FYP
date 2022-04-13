@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:bookbinnepal/productmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import '../../productmodel.dart';
 
 class DetailProduct extends StatefulWidget {
   final int id;
@@ -12,10 +12,11 @@ class DetailProduct extends StatefulWidget {
 }
 
 class _DetailProductState extends State<DetailProduct> {
-  String url = "http://10.0.2.2:8000/first/v1";
-  int? Id;
+  String url = "http://10.0.2.2:8000/apis/v1";
+  int? id;
   String? title;
   String? description;
+
   bool isWaiting = true;
   Future<List<ProductModel>> _getSpecificProductList() async {
     isWaiting = false;
@@ -24,18 +25,21 @@ class _DetailProductState extends State<DetailProduct> {
     );
     var productResponseData = jsonDecode(response.body);
     //print(response.statusCode);
-    print(productResponseData);
+    //print(productResponseData);
     List<ProductModel> productDetails = [];
     // for (var i in productResponseData) {
     ProductModel products = ProductModel(
       id: productResponseData['id'],
       title: productResponseData['title'],
       description: productResponseData['description'],
+      // image: productResponseData['image'],
     );
     setState(() {
-      Id = productResponseData['id'];
+      id = productResponseData['id'];
       title = productResponseData['title'];
       description = productResponseData['description'];
+
+      // disImage = productResponseData['image'];
     });
 
     productDetails.add(products);
@@ -44,10 +48,8 @@ class _DetailProductState extends State<DetailProduct> {
 
     return productDetails;
   }
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _getSpecificProductList();
   }
@@ -56,15 +58,14 @@ class _DetailProductState extends State<DetailProduct> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(251, 216, 23, 23),
-        title: const Text('Detail View'),
+        //backgroundColor: appbarColor,
+        title: const Text('Product'),
       ),
       body: SingleChildScrollView(
         child: Center(
           child: Container(
-            height: 500,
+            height: 150,
             width: double.infinity,
-            color: Color.fromARGB(255, 238, 243, 245),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -72,12 +73,26 @@ class _DetailProductState extends State<DetailProduct> {
                 children: [
                   Text(
                     widget.id.toString(),
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   Text(
                     isWaiting ? '?' : 'Name: ${title.toString()}',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   Text(
-                    isWaiting ? '?' : 'BloodType: ${description.toString()}',
+                    isWaiting
+                        ? '?'
+                        : 'Description: ${description.toString()}',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   // Expanded(
                   //     child: Image(
@@ -87,7 +102,7 @@ class _DetailProductState extends State<DetailProduct> {
                   ElevatedButton(
                       style: ButtonStyle(
                         overlayColor: MaterialStateProperty.all<Color>(
-                          Color.fromARGB(255, 233, 56, 56),
+                          const Color(0xFF41AAB9),
                         ),
                         shape:
                         MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -95,11 +110,13 @@ class _DetailProductState extends State<DetailProduct> {
                               borderRadius: BorderRadius.circular(6.0),
                             )),
                         backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromARGB(255, 233, 56, 56),
+                          const Color(0xFF41AAB9),
                         ),
                       ),
-                      onPressed: () {},
-                      child: const Text('Request'))
+                      onPressed: () {
+                        //requestProduct();
+                      },
+                      child: const Text('Buy'))
                 ],
               ),
             ),

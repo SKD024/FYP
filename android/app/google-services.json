@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "618995054724",
+    "project_id": "bookbinnepal",
+    "storage_bucket": "bookbinnepal.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:618995054724:android:623add6c6cc49b9929aad1",
+        "android_client_info": {
+          "package_name": "com.example.bookbinnepal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "618995054724-8pstn3c4lfj19ql1tvrl4jj7f32r5i46.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXqmXzie-HfuPggNh274nokP2y_w5kkMY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "618995054724-8pstn3c4lfj19ql1tvrl4jj7f32r5i46.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
