@@ -12,6 +12,7 @@ import 'package:http/http.dart';
 
 import '../../../productmodel.dart';
 import '../View product/viewproduct.dart';
+import '../profile/Profilepage.dart';
 
 class AddProduct extends StatefulWidget {
   const AddProduct({Key? key}) : super(key: key);
@@ -29,7 +30,7 @@ class _AddProductState extends State<AddProduct> {
   String? imageName;
   final auth = FirebaseAuth.instance;
   String url = "http://10.0.2.2:8000/apis/v1/";
-
+  bool pickedimage = false;
   uploadImage() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.image,
@@ -43,6 +44,7 @@ class _AddProductState extends State<AddProduct> {
       setState(() {
         print(file);
         print(sc);
+        pickedimage = true;
         imageName = sc;
         imageValue = file;
       });
@@ -55,10 +57,10 @@ class _AddProductState extends State<AddProduct> {
     var postUri = Uri.parse(url);
     var request = MultipartRequest("POST", postUri);
     String userId = auth.currentUser!.uid;
-    String? userEmail = auth.currentUser!.email;
+    //String? postemail = auth.currentUser!.email;
     request.fields['title'] = AddProduct.title.text;
+    request.fields['postemail'] = auth.currentUser!.email!;
     request.fields['description'] = AddProduct.description.text;
-    // request.fields['negotiable'] = AddProduct.n;
     request.files.add(
       MultipartFile.fromBytes('image', imageValue!, filename: imageName),
     );
@@ -66,11 +68,6 @@ class _AddProductState extends State<AddProduct> {
     var response = await request.send();
     print(response.stream);
     print(response.statusCode);
-
-    // if (){
-    //   const snackBar = SnackBar(content: Text('Product has been successfully added.'));
-    //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    // }
     if (response.statusCode == 201) {
       const snackBar =
           SnackBar(content: Text('Product has been successfully added.'));
@@ -78,22 +75,6 @@ class _AddProductState extends State<AddProduct> {
     }
   }
 
-  // User canceled the picker
-
-  // addProduct() async {
-  //   String title = AddProduct.title.value.text;
-  //   String description = AddProduct.description.value.text;
-  //
-  //   ProductModel postProduct = ProductModel(
-  //     title: title,
-  //     description: description,
-  //   );
-  //
-  //   var response = await post(Uri.parse(url),
-  //       body: json.encode(postProduct),
-  //       headers: {'Content-Type': 'application/json'});
-  //   print(response.statusCode);
-  // }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -125,11 +106,17 @@ class _AddProductState extends State<AddProduct> {
               ),
               Padding(
                 padding: const EdgeInsets.all(5.0),
-                child: TextButton(
-                  onPressed: () {
-                    uploadImage();
-                  },
-                  child: const Text('Select Image'),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        uploadImage();
+                      },
+                      child: const Text('Select Image'),
+                    ),
+                    Text(pickedimage? imageName.toString():'No image Picked!'),
+                  ],
                 ),
               ),
               SizedBox(
@@ -164,7 +151,7 @@ class _AddProductState extends State<AddProduct> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const Chats()),
+              MaterialPageRoute(builder: (context) => const viewproducts()),
             );
           },
           backgroundColor: Colors.green,
@@ -174,28 +161,3 @@ class _AddProductState extends State<AddProduct> {
     );
   }
 }
-
-//
-// Widget _buildPopupDialog(BuildContext context) {
-//   return AlertDialog(
-//     title: const Text(''),
-//     content: Column(
-//       mainAxisSize: MainAxisSize.min,
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: const [
-//         Center(child: Text("Added Sucessfully!")),
-//       ],
-//     ),
-//     actions: [
-//       TextButton(
-//         onPressed: () {
-//           // Navigator.push(
-//           //   context,
-//           //   MaterialPageRoute(builder: (context) => AddProduct()),
-//           // );
-//         },
-//         child: const Text('Close'),
-//       ),
-//     ],
-//   );
-// }

@@ -1,12 +1,19 @@
+import 'dart:convert';
+
 import 'package:bookbinnepal/present/screens/login/loginscreen.dart';
 import 'package:bookbinnepal/present/screens/verify.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import '../../usermodel.dart';
 
 class register extends StatefulWidget {
   register({Key? key}) : super(key: key);
   static var econtroller = TextEditingController();
   static var pcontroller = TextEditingController();
+  static var namecontroller = TextEditingController();
+  static var phonecontroller = TextEditingController();
+  static var addcontroller = TextEditingController();
 
   @override
   State<register> createState() => _registerState();
@@ -15,7 +22,7 @@ class register extends StatefulWidget {
 class _registerState extends State<register> {
   final formKey = GlobalKey<FormState>();
   final auth = FirebaseAuth.instance;
-
+  String url = "http://10.0.2.2:8000/apis/v1/user/";
   void validate() {
     if (formKey.currentState!.validate()) {
       registers();
@@ -24,7 +31,6 @@ class _registerState extends State<register> {
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
-
   registers() async {
     try {
       await auth.createUserWithEmailAndPassword(
@@ -38,6 +44,25 @@ class _registerState extends State<register> {
       final snackMessage = SnackBar(content: Text(e.message.toString()));
       ScaffoldMessenger.of(context).showSnackBar(snackMessage);
     }
+  }
+  profile() async {
+    String name = register.namecontroller.value.text;
+    String phone = register.phonecontroller.value.text;
+    String address = register.addcontroller.value.text;
+    String email = register.econtroller.value.text;
+    // String UserId = auth.currentUser!.uid;
+
+    Users postProduct = Users(
+      name: name,
+      email: email,
+      phonenumber: phone,
+      address: address,
+    );
+
+    var response = await post(Uri.parse(url),
+        body: json.encode(postProduct),
+        headers: {'Content-Type': 'application/json'});
+    print(response.statusCode);
   }
   @override
   Widget build(BuildContext context) {
@@ -83,30 +108,6 @@ class _registerState extends State<register> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      // Container(
-                      //   padding:
-                      //   const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      //   child: TextFormField(
-                      //     controller: register.econtroller,
-                      //     style: TextStyle(
-                      //       color: Theme.of(context).primaryColor,
-                      //       fontWeight: FontWeight.bold,
-                      //       fontSize: 22,
-                      //     ),
-                      //     decoration: const InputDecoration(
-                      //       border: InputBorder.none,
-                      //       prefixIcon: Icon(
-                      //         Icons.person_outlined,
-                      //         size: 30,
-                      //       ),
-                      //       labelText: "Name",
-                      //       labelStyle: TextStyle(
-                      //         fontSize: 18,
-                      //         fontWeight: FontWeight.w800,
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
                       const SizedBox(
                         height: 10,
                       ),
@@ -137,29 +138,30 @@ class _registerState extends State<register> {
                       const SizedBox(
                         height: 10,
                       ),
-                      // Container(
-                      //   padding:
-                      //   const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      //   child: TextFormField(
-                      //     style: TextStyle(
-                      //       color: Theme.of(context).primaryColor,
-                      //       fontWeight: FontWeight.bold,
-                      //       fontSize: 22,
-                      //     ),
-                      //     decoration: const InputDecoration(
-                      //       border: InputBorder.none,
-                      //       prefixIcon: Icon(
-                      //         Icons.phone,
-                      //         size: 30,
-                      //       ),
-                      //       labelText: "Phone",
-                      //       labelStyle: TextStyle(
-                      //         fontSize: 18,
-                      //         fontWeight: FontWeight.w800,
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
+                      Container(
+                        padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        child: TextFormField(
+                          controller: register.namecontroller,
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22,
+                          ),
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            prefixIcon: Icon(
+                              Icons.person,
+                              size: 30,
+                            ),
+                            labelText: "Name",
+                            labelStyle: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+                      ),
                       const SizedBox(
                         height: 10,
                       ),
@@ -188,12 +190,67 @@ class _registerState extends State<register> {
                           ),
                         ),
                       ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        child: TextFormField(
+                          controller: register.phonecontroller,
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22,
+                          ),
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            prefixIcon: Icon(
+                              Icons.phone,
+                              size: 30,
+                            ),
+                            labelText: "PhoneNumber",
+                            labelStyle: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        child: TextFormField(
+                          controller: register.addcontroller,
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22,
+                          ),
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            prefixIcon: Icon(
+                              Icons.home,
+                              size: 30,
+                            ),
+                            labelText: "Address",
+                            labelStyle: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+                      ),
                       const SizedBox(height: 10),
                       SizedBox(
                         height: 55,
                         width: double.infinity,
                         child: TextButton(
                           onPressed: () {
+                            profile();
                             validate();
                           },
                           child: const Text(
@@ -245,28 +302,4 @@ class _registerState extends State<register> {
       ),
     );
   }
-}
-
-Widget _buildPopupDialog(BuildContext context) {
-  return AlertDialog(
-    title: const Text(''),
-    content: Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        Center(child: Text("Registered successfully!")),
-      ],
-    ),
-    actions: [
-      TextButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => loginpage()),
-          );
-        },
-        child: const Text('Close'),
-      ),
-    ],
-  );
 }

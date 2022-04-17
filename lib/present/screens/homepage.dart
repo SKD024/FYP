@@ -20,7 +20,7 @@ class _HomepageState extends State<Homepage> {
     const viewproduct(),
     const Chats(),
     const Notifications(),
-    const Profile(),
+     Profile(),
   ];
   @override
   Widget build(BuildContext context) {

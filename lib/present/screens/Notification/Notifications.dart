@@ -103,33 +103,36 @@ class _NotificationsState extends State<Notifications> {
   Widget build(BuildContext context) {
     return DefaultTabController(
         length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: const Color.fromRGBO(161, 78, 203, 1.0),
-            title: const Text('Notification'),
-            centerTitle: true,
-            bottom: const TabBar(
-              tabs: [
-                Tab(
-                  icon: Icon(
-                    Icons.arrow_downward_rounded,
+        child: SafeArea(
+          child: Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              backgroundColor: const Color.fromRGBO(161, 78, 203, 1.0),
+              title: const Text('Notification'),
+              centerTitle: true,
+              bottom: const TabBar(
+                tabs: [
+                  Tab(
+                    icon: Icon(
+                      Icons.arrow_downward_rounded,
+                    ),
+                    text: 'Inbox',
                   ),
-                  text: 'Inbox',
-                ),
-                Tab(
-                  icon: Icon(
-                    Icons.arrow_upward_rounded,
+                  Tab(
+                    icon: Icon(
+                      Icons.arrow_upward_rounded,
+                    ),
+                    text: 'Outbox',
                   ),
-                  text: 'Outbox',
-                ),
+                ],
+              ),
+            ),
+            body: TabBarView(
+              children: [
+                inboxpage(),
+                outboxpage(),
               ],
             ),
-          ),
-          body: TabBarView(
-            children: [
-              inboxpage(),
-              outboxpage(),
-            ],
           ),
         ));
   }
@@ -148,7 +151,7 @@ class _NotificationsState extends State<Notifications> {
             return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
-                  if ('${snapshot.data[index].requestUserId}' ==
+                  if ('${snapshot.data[index].postUserId}' ==
                       FirebaseAuth.instance.currentUser!.uid) {
                     return Padding(
                       padding: const EdgeInsets.all(10.0),
@@ -286,7 +289,7 @@ class _NotificationsState extends State<Notifications> {
             return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
-                  if ('${snapshot.data[index].postUserId}' ==
+                  if ('${snapshot.data[index].requestUserId}' ==
                       FirebaseAuth.instance.currentUser!.uid) {
                     return Padding(
                       padding: const EdgeInsets.all(10.0),
@@ -340,58 +343,58 @@ class _NotificationsState extends State<Notifications> {
                                         // deleteProduct();
                                       }),
                                 ),
-                                if (snapshot.data[index].isAccepted ==
-                                    true) ...[
-                                  ElevatedButton(
-                                    // style: kButtonStyle,
-                                    onPressed: () async {
-                                      await _firestore
-                                          .collection('users')
-                                          .where("email",
-                                          isEqualTo: snapshot.data[index]
-                                              .requestEmail)
-                                          .get()
-                                          .then((value) {
-                                        setState(() {
-                                          userMap = value.docs[0].data();
-                                        });
-                                      });
-                                      String roomId = chatRoomId(
-                                          _auth.currentUser!.email!,
-                                          userMap!['email']);
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (_) => ChatRoom(
-                                            chatRoomId: roomId,
-                                            userMap: userMap!,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    child: const Text('Chat'),
-                                  ),
-                                ] else ...[
-                                  Row(
-                                    children: [
-                                      ElevatedButton(
-                                        // style: kButtonStyle,
-                                        onPressed: () {
-                                          updateId = snapshot.data[index].id
-                                              .toString();
-                                          updateProduct();
-                                        },
-                                        child: const Text("Accept"),
-                                      ),
-                                      const SizedBox(
-                                        width: 30,
-                                      ),
-                                      ElevatedButton(
-                                        // style:
-                                        // kButtonStyleDecline,
-                                          onPressed: () {},
-                                          child: const Text("Decline"))
-                                    ],
-                                  ) ],
+                                // if (snapshot.data[index].isAccepted ==
+                                //     true) ...[
+                                //   ElevatedButton(
+                                //     // style: kButtonStyle,
+                                //     onPressed: () async {
+                                //       await _firestore
+                                //           .collection('users')
+                                //           .where("email",
+                                //           isEqualTo: snapshot.data[index]
+                                //               .requestEmail)
+                                //           .get()
+                                //           .then((value) {
+                                //         setState(() {
+                                //           userMap = value.docs[0].data();
+                                //         });
+                                //       });
+                                //       String roomId = chatRoomId(
+                                //           _auth.currentUser!.email!,
+                                //           userMap!['email']);
+                                //       Navigator.of(context).push(
+                                //         MaterialPageRoute(
+                                //           builder: (_) => ChatRoom(
+                                //             chatRoomId: roomId,
+                                //             userMap: userMap!,
+                                //           ),
+                                //         ),
+                                //       );
+                                //     },
+                                //     child: const Text('Chat'),
+                                //   ),
+                                // ] else ...[
+                                //   Row(
+                                //     children: [
+                                //       ElevatedButton(
+                                //         // style: kButtonStyle,
+                                //         onPressed: () {
+                                //           updateId = snapshot.data[index].id
+                                //               .toString();
+                                //           updateProduct();
+                                //         },
+                                //         child: const Text("Accept"),
+                                //       ),
+                                //       const SizedBox(
+                                //         width: 30,
+                                //       ),
+                                //       ElevatedButton(
+                                //         // style:
+                                //         // kButtonStyleDecline,
+                                //           onPressed: () {},
+                                //           child: const Text("Decline"))
+                                //     ],
+                                //   ) ],
                               ] ),
                             ),
                           ),

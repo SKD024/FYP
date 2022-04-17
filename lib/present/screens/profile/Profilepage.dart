@@ -1,42 +1,44 @@
 import 'dart:convert';
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
 import '../../../productmodel.dart';
+import '../../usermodel.dart';
 import '../Add product/addproduct.dart';
 import '../viewdetails.dart';
 
-class viewproduct extends StatefulWidget {
-  const viewproduct({Key? key}) : super(key: key);
+class viewproducts extends StatefulWidget {
+  const viewproducts({Key? key}) : super(key: key);
 
   @override
-  State<viewproduct> createState() => _viewproductState();
+  State<viewproducts> createState() => _viewproductState();
 }
 
-class _viewproductState extends State<viewproduct> {
-  String url = "http://10.0.2.2:8000/apis/v1/";
-  Future<List<ProductModel>> _getProductList() async {
+class _viewproductState extends State<viewproducts> {
+  String url = "http://10.0.2.2:8000/apis/v1/user/";
+  Future<List<Users>> _getProductList() async {
     Response response = await get(
       Uri.parse(url),
     );
     var productResponseData = jsonDecode(response.body);
-    List<ProductModel> productDetails = [];
+    List<Users> userdetails = [];
     for (var i in productResponseData) {
-      ProductModel products = ProductModel(
-        id: i['id'],
-        title: i['title'],
-        description: i['description'],
-        image: i['image'],
+      Users user = Users(
+        name: i['name'],
+        phonenumber: i['phonenumber'],
+        address: i['address'],
+        email: i['email'],
       );
 
-      productDetails.add(products);
+      userdetails.add(user);
       //print(productDetails);
     }
 
-    return productDetails;
+    return userdetails;
   }
 
   @override
@@ -55,13 +57,15 @@ class _viewproductState extends State<viewproduct> {
               if (snapshot.data == null) {
                 return const Center(
                     child: Text(
-                  "Loading...",
-                  style: TextStyle(color: Colors.black),
-                ));
+                      "Loading...",
+                      style: TextStyle(color: Colors.black),
+                    ));
               } else {
                 return ListView.builder(
                     itemCount: snapshot.data.length,
                     itemBuilder: (BuildContext context, int index) {
+    if ('${snapshot.data[index].email}' ==
+    FirebaseAuth.instance.currentUser!.email) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: SizedBox(
@@ -87,25 +91,29 @@ class _viewproductState extends State<viewproduct> {
                                   ),
                                   child: Center(
                                     child: ListTile(
-                                      leading: SizedBox(
-                                        // height: 250,
-                                        // width: 150,
-                                        child: Image.network(
-                                          '${snapshot.data[index].image}',
-                                           height: 100,
-                                           width: 100,
-                                          fit: BoxFit.cover,
-                                        ),
+                                      leading: Text(
+                                        'name: ${snapshot.data[index].name}',
+                                        style: const TextStyle(
+                                            color: Color(0xFF0A0000),
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500),
                                       ),
                                       title: Text(
-                                        'Title: ${snapshot.data[index].title}',
+                                        'email: ${snapshot.data[index].email}',
                                         style: const TextStyle(
                                             color: Color(0xFF0A0000),
                                             fontSize: 20,
                                             fontWeight: FontWeight.w600),
                                       ),
                                       subtitle: Text(
-                                        'Description: ${snapshot.data[index].description}',
+                                        'address: ${snapshot.data[index].address}',
+                                        style: const TextStyle(
+                                            color: Color(0xFF0A0000),
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      trailing: Text(
+                                        'phonenumber: ${snapshot.data[index].phonenumber}',
                                         style: const TextStyle(
                                             color: Color(0xFF0A0000),
                                             fontSize: 18,
@@ -116,18 +124,12 @@ class _viewproductState extends State<viewproduct> {
                                 ),
                               ),
                               onTap: () {
-                                int pId = snapshot.data[index].id;
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => DetailProduct(
-                                            id: pId,
-                                          )),
-                                );
                               }),
                         ),
                       );
-                    });
+                    }
+                    return const Padding(padding: EdgeInsets.all(8.0),);
+                    },);
               }
             }),
         // ],
