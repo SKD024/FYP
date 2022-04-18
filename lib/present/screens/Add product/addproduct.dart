@@ -4,7 +4,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import '../profile/Profilepage.dart';
 
 class AddProduct extends StatefulWidget {
   const AddProduct({Key? key}) : super(key: key);
@@ -52,10 +51,10 @@ class _AddProductState extends State<AddProduct> {
   addProduct() async {
     var postUri = Uri.parse(url);
     var request = MultipartRequest("POST", postUri);
-    String userId = auth.currentUser!.uid;
-
+    // String userID = auth.currentUser!.uid;
     //String? postemail = auth.currentUser!.email;
     request.fields['title'] = AddProduct.title.text;
+    request.fields['userID'] = auth.currentUser!.uid;
     request.fields['postemail'] = auth.currentUser!.email!;
     request.fields['description'] = AddProduct.description.text;
     request.fields['genre'] = AddProduct.genre.text;
@@ -194,6 +193,7 @@ class _AddProductState extends State<AddProduct> {
                     ),
                     onPressed: () {
                      addProduct();
+
                      //print(dropdownValue); // showDialog(
                       //   context: context,
                       //   builder: (BuildContext context) =>
@@ -207,10 +207,10 @@ class _AddProductState extends State<AddProduct> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const viewproducts()),
-            );
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => ),
+            // );
           },
           backgroundColor: Colors.green,
           child: const Icon(Icons.navigation),

@@ -33,14 +33,14 @@ class _NotificationsState extends State<Notifications> {
     List<NotificationModel> requestDetails = [];
     for (var i in requestResponseData) {
       NotificationModel requests = NotificationModel(
-          id: i['id'],
-          title: i['title'],
-          description: i['description'],
-          postUserId: i['postUserId'],
-          requestUserId: i['requestUserId'],
-          postEmail: i['postEmail'],
-          requestEmail: i['requestEmail'],
-          isAccepted: i['isAccepted'],);
+        id: i['id'],
+        title: i['title'],
+        description: i['description'],
+        postUserId: i['postUserId'],
+        requestUserId: i['requestUserId'],
+        postEmail: i['postEmail'],
+        requestEmail: i['requestEmail'],
+        isAccepted: i['isAccepted'],);
       requestDetails.add(requests);
       // print(requestDetails);
     }

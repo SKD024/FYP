@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bookbinnepal/present/screens/login/loginscreen.dart';
 import 'package:bookbinnepal/present/screens/verify.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -23,6 +24,9 @@ class _registerState extends State<register> {
   final formKey = GlobalKey<FormState>();
   final auth = FirebaseAuth.instance;
   String url = "http://10.0.2.2:8000/apis/v1/user/";
+  final firestore=FirebaseFirestore.instance;
+
+
   void validate() {
     if (formKey.currentState!.validate()) {
       registers();
@@ -33,18 +37,34 @@ class _registerState extends State<register> {
   }
   registers() async {
     try {
-      await auth.createUserWithEmailAndPassword(
+      User? user= (await auth.createUserWithEmailAndPassword(
+      // await auth.createUserWithEmailAndPassword(
           email: register.econtroller.text,
-          password: register.pcontroller.text);
-      await Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => VerifyEmail()),
-      );
+          password: register.pcontroller.text)) .user;
+
+      if(user!= null){
+        user.updateDisplayName(register.namecontroller.value.text);
+
+        await firestore.collection('users').doc(auth.currentUser!.uid).set({
+          "userId": auth.currentUser!.uid,
+          "email": auth.currentUser!.email,
+          "contact": register.phonecontroller.value.text,
+          "name": register.namecontroller.value.text,
+        });
+
+        await Navigator.push(
+                 context,
+                 MaterialPageRoute(builder: (context) => VerifyEmail()),
+               );
+      }
+
     } on FirebaseAuthException catch (e) {
       final snackMessage = SnackBar(content: Text(e.message.toString()));
       ScaffoldMessenger.of(context).showSnackBar(snackMessage);
     }
   }
+
+
   profile() async {
     String name = register.namecontroller.value.text;
     String phone = register.phonecontroller.value.text;

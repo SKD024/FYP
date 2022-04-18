@@ -8,6 +8,7 @@ class ProductModel {
   String? author;
   String? price;
   String? condition;
+  String? userID;
 
   ProductModel(
       {this.id,
@@ -18,7 +19,9 @@ class ProductModel {
         this.genre,
         this.author,
         this.price,
-        this.condition});
+        this.condition,
+        this.userID,
+      });
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -30,6 +33,7 @@ class ProductModel {
     author = json['author'];
     price = json['price'];
     condition = json['condition'];
+    userID = json['userID'];
   }
 
   Map<String, dynamic> toJson() {
@@ -43,6 +47,7 @@ class ProductModel {
     data['author'] = this.author;
     data['price'] = this.price;
     data['condition'] = this.condition;
+    data['userID'] = this.userID;
     return data;
   }
 }
