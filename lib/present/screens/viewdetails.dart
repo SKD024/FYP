@@ -73,7 +73,6 @@ class _DetailProductState extends State<DetailProduct> {
   requestProd() async {
 
     String requestUrl = "http://10.0.2.2:8000/apis/v1/request/";
-
     String? title = Rtitle;
     String? description= Rdescription;
     String? UserID =RuserID;
@@ -98,8 +97,6 @@ class _DetailProductState extends State<DetailProduct> {
       requestEmail:requestEmail,
       postEmail:postEmail,
       isAccepted:false,
-
-
     );
 
     var response = await post(Uri.parse(requestUrl),
@@ -127,7 +124,7 @@ class _DetailProductState extends State<DetailProduct> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Product'),
+        title: Text(Rtitle.toString()),
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -136,83 +133,116 @@ class _DetailProductState extends State<DetailProduct> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-            SizedBox(
-              height: 200,
-              width: 200,
+                const SizedBox(height: 15),
+            Card(
+              clipBehavior: Clip.antiAlias,
+              shadowColor: const Color.fromRGBO(224, 4, 167, 1.0),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0)),
+              elevation: 20,
+              color: const Color.fromRGBO(224, 219, 236, 1.0),
               child: Image(image: NetworkImage(isWaiting ? '?' : image.toString(),),
-                height: 400,
-                width: 150,
+                height: 250,
+                width: 250,
                 fit: BoxFit.cover,
               ),
             ),
-                const SizedBox(height: 20,width: 20,),
-                // Text(
-                //   widget.id.toString(),
-                //   style: const TextStyle(
-                //     fontSize: 20,
-                //     fontWeight: FontWeight.bold,
-                //   ),
-                // ),
-                Text(
-                  isWaiting ? '?' : 'Name: ${Rtitle.toString()}',
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  isWaiting
-                      ? '?'
-                      : 'Description: ${Rdescription.toString()}',
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  isWaiting
-                      ? '?'
-                      : 'Posted by: ${Rpostemail.toString()}',
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  isWaiting
-                      ? '?'
-                      : 'Genre: ${Rgenre.toString()}',
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  isWaiting
-                      ? '?'
-                      : 'author: ${Rauthor.toString()}',
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  isWaiting
-                      ? '?'
-                      : 'Price: ${Rprice.toString()}',
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  isWaiting
-                      ? '?'
-                      : 'condition: ${Rcondition.toString()}',
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+                const SizedBox(height: 30,width: 20,),
+                Card(
+                  clipBehavior: Clip.antiAlias,
+                  shadowColor: const Color.fromRGBO(133, 13, 189, 1.0),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0)),
+                  elevation: 10,
+                  color: const Color.fromRGBO(224, 219, 236, 1.0),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Color.fromRGBO(155, 45, 215, 100.0),
+                          Color.fromRGBO(220, 218, 218, 1.0)
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 5,),
+                        Text(
+                          isWaiting ? '?' : 'Title: ${Rtitle.toString()}',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 5,),
+                        Text(
+                          isWaiting
+                              ? '?'
+                              : 'Description: ${Rdescription.toString()}',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 5,),
+                        Text(
+                          isWaiting
+                              ? '?'
+                              : 'Posted by: ${Rpostemail.toString()}',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 7,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              isWaiting
+                                  ? '?'
+                                  : 'Genre: ${Rgenre.toString()}',
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              isWaiting
+                                  ? '?'
+                                  : 'Author: ${Rauthor.toString()}',
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 5,),
+                        Text(
+                          isWaiting
+                              ? '?'
+                              : 'Price: ${Rprice.toString()}',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 5,),
+                        Text(
+                          isWaiting
+                              ? '?'
+                              : 'condition: ${Rcondition.toString()}',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 7,),
+                      ],
+                    ),),
                 ),
                 const SizedBox(height: 20,width: 20,),
                 ElevatedButton(
@@ -230,7 +260,6 @@ class _DetailProductState extends State<DetailProduct> {
                       ),
                     ),
                     onPressed: () {
-                      //requestProduct();
                       requestProd();
                     },
                     child: const Text('Buy'))

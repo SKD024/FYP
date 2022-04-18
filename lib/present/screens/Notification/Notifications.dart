@@ -40,7 +40,12 @@ class _NotificationsState extends State<Notifications> {
         requestUserId: i['requestUserId'],
         postEmail: i['postEmail'],
         requestEmail: i['requestEmail'],
+        genre: i['genre'],
+        price: i['price'],
+        author: i['author'],
+        condition: i['condition'],
         isAccepted: i['isAccepted'],);
+
       requestDetails.add(requests);
       // print(requestDetails);
     }
@@ -62,6 +67,10 @@ class _NotificationsState extends State<Notifications> {
     String postEmail = responseData['postEmail'];
     String requestEmail = responseData['requestEmail'];
     String description = responseData['description'];
+    String genre = responseData['genre'];
+    String author = responseData['author'];
+    String price = responseData['price'];
+    String condition = responseData['condition'];
 
     print(response.statusCode);
     if (response.statusCode == 200) {
@@ -77,6 +86,10 @@ class _NotificationsState extends State<Notifications> {
           'requestUserId': requestUserId,
           'requestEmail': requestEmail,
           'description': description,
+          'genre': genre,
+          'author': author,
+          'price': price,
+          'condition': condition,
           'isAccepted': 'true',
         }),
       );
@@ -178,16 +191,14 @@ class _NotificationsState extends State<Notifications> {
                                 children: [
                                   ListTile(
                                     leading: Text(
-                                      'title \n'
+                                      'title: \n'
                                           '${snapshot.data[index].title}',
                                       style: TextStyle(
                                         fontSize: 25,
                                         foreground: Paint()
                                           ..style = PaintingStyle.fill
-                                        // ..style = PaintingStyle.fill
                                           ..strokeWidth = 6
-                                          ..color =
-                                          const Color.fromRGBO(161, 78, 203, 1.0),
+                                          ..color = const Color.fromRGBO(161, 78, 203, 1.0),
                                       ),
                                     ),
                                     title: Text(
@@ -198,18 +209,10 @@ class _NotificationsState extends State<Notifications> {
                                           fontSize: 20,
                                           fontWeight: FontWeight.w600),
                                     ),
-                                    // trailing: IconButton(
-                                    //     icon: Icon(Icons.delete,
-                                    //         color: Colors.red),
-                                    //     onPressed: () {
-                                    //       // deleteId = snapshot.data[index].id;
-                                    //       // deleteProduct();
-                                    //     }),
                                   ),
                                   if (snapshot.data[index].isAccepted ==
                                       true) ...[
                                     ElevatedButton(
-                                      // style: kButtonStyle,
                                       onPressed: () async {
                                         await _firestore
                                             .collection('users')
@@ -252,8 +255,6 @@ class _NotificationsState extends State<Notifications> {
                                           width: 30,
                                         ),
                                         ElevatedButton(
-                                          // style:
-                                          // kButtonStyleDecline,
                                             onPressed: () {},
                                             child: const Text("decline"))
                                       ],
