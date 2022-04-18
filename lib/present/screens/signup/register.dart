@@ -141,6 +141,7 @@ class _registerState extends State<register> {
                             fontWeight: FontWeight.bold,
                             fontSize: 22,
                           ),
+                          textInputAction: TextInputAction.next,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                             prefixIcon: Icon(
@@ -168,6 +169,7 @@ class _registerState extends State<register> {
                             fontWeight: FontWeight.bold,
                             fontSize: 22,
                           ),
+                          textInputAction: TextInputAction.next,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                             prefixIcon: Icon(
@@ -196,6 +198,7 @@ class _registerState extends State<register> {
                             fontWeight: FontWeight.bold,
                             fontSize: 22,
                           ),
+                          textInputAction: TextInputAction.next,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                             prefixIcon: Icon(
@@ -223,6 +226,7 @@ class _registerState extends State<register> {
                             fontWeight: FontWeight.bold,
                             fontSize: 22,
                           ),
+                          textInputAction: TextInputAction.next,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                             prefixIcon: Icon(
@@ -250,6 +254,7 @@ class _registerState extends State<register> {
                             fontWeight: FontWeight.bold,
                             fontSize: 22,
                           ),
+                          textInputAction: TextInputAction.done,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                             prefixIcon: Icon(

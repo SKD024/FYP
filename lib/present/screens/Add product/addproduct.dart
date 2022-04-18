@@ -89,7 +89,7 @@ class _AddProductState extends State<AddProduct> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(30.0),
+                padding: const EdgeInsets.all(20.0),
                 child: TextFormField(
                   controller: AddProduct.title,
                   decoration: const InputDecoration(hintText: 'Title'),
@@ -97,15 +97,15 @@ class _AddProductState extends State<AddProduct> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(30.0),
+                padding: const EdgeInsets.all(20.0),
                 child: TextFormField(
                   controller: AddProduct.description,
                   decoration: const InputDecoration(hintText: 'Description'),
-                  textInputAction: TextInputAction.done,
+                  textInputAction: TextInputAction.next,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(30.0),
+                padding: const EdgeInsets.all(20.0),
                 child: TextFormField(
                   controller: AddProduct.genre,
                   decoration: const InputDecoration(hintText: 'Genre'),
@@ -113,7 +113,7 @@ class _AddProductState extends State<AddProduct> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(30.0),
+                padding: const EdgeInsets.all(20.0),
                 child: TextFormField(
                   controller: AddProduct.author,
                   decoration: const InputDecoration(hintText: 'Author'),
@@ -121,15 +121,15 @@ class _AddProductState extends State<AddProduct> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(30.0),
+                padding: const EdgeInsets.all(20.0),
                 child: TextFormField(
                   controller: AddProduct.price,
                   decoration: const InputDecoration(hintText: 'Price'),
-                  textInputAction: TextInputAction.next,
+                  textInputAction: TextInputAction.done,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(5.0),
+                padding: const EdgeInsets.all(7.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -176,6 +176,7 @@ class _AddProductState extends State<AddProduct> {
                   ),
                 ],
               ),
+              SizedBox(height: 10,),
               SizedBox(
                 width: 100,
                 child: ElevatedButton(
@@ -193,12 +194,6 @@ class _AddProductState extends State<AddProduct> {
                     ),
                     onPressed: () {
                      addProduct();
-
-                     //print(dropdownValue); // showDialog(
-                      //   context: context,
-                      //   builder: (BuildContext context) =>
-                      //       _buildPopupDialog(context),
-                      // );
                     },
                     child: const Text("Submit")),
               ),
