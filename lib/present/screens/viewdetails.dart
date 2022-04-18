@@ -20,6 +20,10 @@ class _DetailProductState extends State<DetailProduct> {
   String? description;
   String? image;
   String? postemail;
+  String? genre;
+  String? author;
+  String? condition;
+  String? price;
 
   bool isWaiting = true;
   Future<List<ProductModel>> _getSpecificProductList() async {
@@ -35,6 +39,10 @@ class _DetailProductState extends State<DetailProduct> {
       description: productResponseData['description'],
       image: productResponseData['image'],
       postemail: productResponseData['postemail'],
+      genre: productResponseData['genre'],
+      author: productResponseData['author'],
+      condition: productResponseData['condition'],
+      price: productResponseData['price'],
     );
     setState(() {
       id = productResponseData['id'];
@@ -42,23 +50,16 @@ class _DetailProductState extends State<DetailProduct> {
       description = productResponseData['description'];
       image = productResponseData['image'];
       postemail = productResponseData['postemail'];
+      genre= productResponseData['genre'];
+      author= productResponseData['author'];
+      condition= productResponseData['condition'];
+      price= productResponseData['price'];
     });
 
     productDetails.add(products);
 
     return productDetails;
   }
-
-  // NotificationModel request = NotificationModel(
-  //   id: 0,
-  //   title: title,
-  //   description:description ,
-  //   isAccepted: false,
-  //   requestUserId: ,
-  //   postUserId: ,
-  //   postEmail: ,
-  //   requestEmail: ,
-  // )
 
   @override
   void initState() {
@@ -116,6 +117,42 @@ class _DetailProductState extends State<DetailProduct> {
                   isWaiting
                       ? '?'
                       : 'Posted by: ${postemail.toString()}',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  isWaiting
+                      ? '?'
+                      : 'Genre: ${genre.toString()}',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  isWaiting
+                      ? '?'
+                      : 'author: ${author.toString()}',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  isWaiting
+                      ? '?'
+                      : 'Price: ${price.toString()}',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  isWaiting
+                      ? '?'
+                      : 'condition: ${condition.toString()}',
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,

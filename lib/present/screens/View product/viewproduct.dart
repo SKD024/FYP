@@ -4,9 +4,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-
-import '../../../productmodel.dart';
-import '../Add product/addproduct.dart';
+import 'package:bookbinnepal/productmodel.dart';
 import '../viewdetails.dart';
 
 class viewproduct extends StatefulWidget {
@@ -22,6 +20,7 @@ class _viewproductState extends State<viewproduct> {
     Response response = await get(
       Uri.parse(url),
     );
+    print(response.body);
     var productResponseData = jsonDecode(response.body);
     List<ProductModel> productDetails = [];
     for (var i in productResponseData) {
@@ -30,15 +29,25 @@ class _viewproductState extends State<viewproduct> {
         title: i['title'],
         description: i['description'],
         image: i['image'],
+        postemail: i['postemail'],
+        genre: i['genre'],
+        author: i['author'],
+        price: i['price'],
+        condition: i['condition'],
       );
 
       productDetails.add(products);
-      //print(productDetails);
+
     }
+    print(productDetails);
 
     return productDetails;
   }
-
+  @override
+  void initState() {
+    _getProductList();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -52,12 +61,13 @@ class _viewproductState extends State<viewproduct> {
         body: FutureBuilder(
             future: _getProductList(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
+              print(snapshot.data);
               if (snapshot.data == null) {
                 return const Center(
                     child: Text(
-                  "Loading...",
-                  style: TextStyle(color: Colors.black),
-                ));
+                      "Loadings... ",
+                      style: TextStyle(color: Colors.black),
+                    ));
               } else {
                 return ListView.builder(
                     itemCount: snapshot.data.length,
@@ -92,8 +102,8 @@ class _viewproductState extends State<viewproduct> {
                                         // width: 150,
                                         child: Image.network(
                                           '${snapshot.data[index].image}',
-                                           height: 100,
-                                           width: 100,
+                                          height: 100,
+                                          width: 100,
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -121,15 +131,15 @@ class _viewproductState extends State<viewproduct> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => DetailProduct(
-                                            id: pId,
-                                          )),
+                                        id: pId,
+                                      )),
                                 );
                               }),
                         ),
                       );
                     });
               }
-            }),
+            },),
         // ],
       ),
     );

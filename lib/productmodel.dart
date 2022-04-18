@@ -4,8 +4,21 @@ class ProductModel {
   String? description;
   String? image;
   String? postemail;
+  String? genre;
+  String? author;
+  String? price;
+  String? condition;
 
-  ProductModel({this.id, this.title, this.description, this.image, this.postemail});
+  ProductModel(
+      {this.id,
+        this.title,
+        this.description,
+        this.image,
+        this.postemail,
+        this.genre,
+        this.author,
+        this.price,
+        this.condition});
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -13,6 +26,10 @@ class ProductModel {
     description = json['description'];
     image = json['image'];
     postemail = json['postemail'];
+    genre = json['genre'];
+    author = json['author'];
+    price = json['price'];
+    condition = json['condition'];
   }
 
   Map<String, dynamic> toJson() {
@@ -22,6 +39,10 @@ class ProductModel {
     data['description'] = this.description;
     data['image'] = this.image;
     data['postemail'] = this.postemail;
+    data['genre'] = this.genre;
+    data['author'] = this.author;
+    data['price'] = this.price;
+    data['condition'] = this.condition;
     return data;
   }
 }

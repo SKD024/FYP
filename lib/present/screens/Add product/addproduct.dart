@@ -1,17 +1,9 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:bookbinnepal/present/screens/Message/Message.dart';
-import 'package:bookbinnepal/present/screens/Notification/Notifications.dart';
-import 'package:bookbinnepal/present/screens/profile/Profile.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-
-import '../../../productmodel.dart';
-import '../View product/viewproduct.dart';
 import '../profile/Profilepage.dart';
 
 class AddProduct extends StatefulWidget {
@@ -19,12 +11,16 @@ class AddProduct extends StatefulWidget {
   static String id = "addproduct_page";
   static var title = TextEditingController();
   static var description = TextEditingController();
+  static var genre = TextEditingController();
+  static var author = TextEditingController();
+  static var price = TextEditingController();
 
   @override
   _AddProductState createState() => _AddProductState();
 }
 
 class _AddProductState extends State<AddProduct> {
+  String dropdownValue = 'New';
   File? image;
   Uint8List? imageValue;
   String? imageName;
@@ -57,10 +53,15 @@ class _AddProductState extends State<AddProduct> {
     var postUri = Uri.parse(url);
     var request = MultipartRequest("POST", postUri);
     String userId = auth.currentUser!.uid;
+
     //String? postemail = auth.currentUser!.email;
     request.fields['title'] = AddProduct.title.text;
     request.fields['postemail'] = auth.currentUser!.email!;
     request.fields['description'] = AddProduct.description.text;
+    request.fields['genre'] = AddProduct.genre.text;
+    request.fields['author'] = AddProduct.author.text;
+    request.fields['price'] = AddProduct.price.text;
+    request.fields['condition'] = dropdownValue;
     request.files.add(
       MultipartFile.fromBytes('image', imageValue!, filename: imageName),
     );
@@ -105,6 +106,30 @@ class _AddProductState extends State<AddProduct> {
                 ),
               ),
               Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: TextFormField(
+                  controller: AddProduct.genre,
+                  decoration: const InputDecoration(hintText: 'Genre'),
+                  textInputAction: TextInputAction.next,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: TextFormField(
+                  controller: AddProduct.author,
+                  decoration: const InputDecoration(hintText: 'Author'),
+                  textInputAction: TextInputAction.next,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: TextFormField(
+                  controller: AddProduct.price,
+                  decoration: const InputDecoration(hintText: 'Price'),
+                  textInputAction: TextInputAction.next,
+                ),
+              ),
+              Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -118,6 +143,39 @@ class _AddProductState extends State<AddProduct> {
                     Text(pickedimage? imageName.toString():'No image Picked!'),
                   ],
                 ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Condition:', style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),),
+                  const SizedBox(width: 5,),
+                  DropdownButton<String>(
+                    value: dropdownValue,
+                    icon: const Icon(Icons.arrow_downward),
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.deepPurple),
+                    underline: Container(
+                      height: 2,
+                      color: Color.fromRGBO(174, 140, 199, 1.0)
+                    ),
+                    isExpanded: false,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        dropdownValue = newValue!;
+                      });
+                    },
+                    items: <String>['New', 'Used', 'LikeNew',]
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value, style: const TextStyle(color: Colors.black87, fontSize:20 ),),
+                      );
+                    }).toList(),
+                  ),
+                ],
               ),
               SizedBox(
                 width: 100,
@@ -135,8 +193,8 @@ class _AddProductState extends State<AddProduct> {
                       ),
                     ),
                     onPressed: () {
-                      addProduct();
-                      // showDialog(
+                     addProduct();
+                     //print(dropdownValue); // showDialog(
                       //   context: context,
                       //   builder: (BuildContext context) =>
                       //       _buildPopupDialog(context),
