@@ -1,26 +1,27 @@
 import 'dart:convert';
 
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:bookbinnepal/present/Models/productmodel.dart';
-import '../viewdetails.dart';
 
-class viewproduct extends StatefulWidget {
-  const viewproduct({Key? key}) : super(key: key);
+import '../Models/productmodel.dart';
+import 'viewdetails.dart';
+
+class MyBooks extends StatefulWidget {
+  const MyBooks({Key? key}) : super(key: key);
 
   @override
-  State<viewproduct> createState() => _viewproductState();
+  State<MyBooks> createState() => _MyBooksState();
 }
 
-class _viewproductState extends State<viewproduct> {
+class _MyBooksState extends State<MyBooks> {
   String url = "http://10.0.2.2:8000/apis/v1/";
   Future<List<ProductModel>> _getProductList() async {
     Response response = await get(
       Uri.parse(url),
     );
     print(response.body);
+    print(currentuser);
     var productResponseData = jsonDecode(response.body);
     List<ProductModel> productDetails = [];
     for (var i in productResponseData) {
@@ -43,13 +44,7 @@ class _viewproductState extends State<viewproduct> {
 
     return productDetails;
   }
-
-  @override
-  void initState() {
-    _getProductList();
-    super.initState();
-  }
-
+  var currentuser = FirebaseAuth.instance.currentUser?.email;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -57,9 +52,7 @@ class _viewproductState extends State<viewproduct> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: const Color.fromRGBO(161, 78, 203, 1.0),
-          title: const Center(
-            child: Text('View Books'),
-          ),
+          title: const Center(child: Text('My Books')),
           automaticallyImplyLeading: false,
         ),
         body: FutureBuilder(
@@ -69,14 +62,15 @@ class _viewproductState extends State<viewproduct> {
             if (snapshot.data == null) {
               return const Center(
                   child: Text(
-                "Loadings... ",
-                style: TextStyle(color: Colors.black),
-              ));
+                    "Loadings... ",
+                    style: TextStyle(color: Colors.black),
+                  ));
             } else {
               return ListView.builder(
                   itemCount: snapshot.data.length,
                   itemBuilder: (BuildContext context, int index) {
-                    if (snapshot.data[index].isverified == true) {
+                    if ('${snapshot.data[index].postemail}' ==
+                        currentuser) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: SizedBox(
@@ -84,8 +78,7 @@ class _viewproductState extends State<viewproduct> {
                           child: GestureDetector(
                               child: Card(
                                 clipBehavior: Clip.antiAlias,
-                                shadowColor:
-                                    const Color.fromRGBO(133, 13, 189, 1.0),
+                                shadowColor: const Color.fromRGBO(133, 13, 189, 1.0),
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(15.0)),
                                 elevation: 10,
@@ -137,8 +130,8 @@ class _viewproductState extends State<viewproduct> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => DetailProduct(
-                                            id: pId,
-                                          )),
+                                        id: pId,
+                                      )),
                                 );
                               }),
                         ),

@@ -9,6 +9,7 @@ class ProductModel {
   String? price;
   String? condition;
   String? userID;
+  bool? isverified;
 
   ProductModel(
       {this.id,
@@ -21,6 +22,7 @@ class ProductModel {
         this.price,
         this.condition,
         this.userID,
+        this.isverified,
       });
 
   ProductModel.fromJson(Map<String, dynamic> json) {
@@ -34,6 +36,7 @@ class ProductModel {
     price = json['price'];
     condition = json['condition'];
     userID = json['userID'];
+    isverified = json['isverified'];
   }
 
   Map<String, dynamic> toJson() {
@@ -48,6 +51,7 @@ class ProductModel {
     data['price'] = this.price;
     data['condition'] = this.condition;
     data['userID'] = this.userID;
+    data['isverified'] = this.isverified;
     return data;
   }
 }

@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:bookbinnepal/present/screens/MyBooks.dart';
+import 'package:bookbinnepal/present/screens/UpcoommingBooks/upcommingbooks.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -70,7 +72,7 @@ class _AddProductState extends State<AddProduct> {
     print(response.statusCode);
     if (response.statusCode == 201) {
       const snackBar =
-          SnackBar(content: Text('Product has been successfully added.'));
+          SnackBar(content: Text('Book has been added successfully.'));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
@@ -82,7 +84,7 @@ class _AddProductState extends State<AddProduct> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: const Color.fromRGBO(161, 78, 203, 1.0),
-          title: const Center(child: Text('Add Products')),
+          title: const Center(child: Text('Add Books')),
           automaticallyImplyLeading: false,
         ),
         body: SingleChildScrollView(
@@ -139,44 +141,58 @@ class _AddProductState extends State<AddProduct> {
                       },
                       child: const Text('Select Image'),
                     ),
-                    Text(pickedimage? imageName.toString():'No image Picked!'),
+                    Text(pickedimage
+                        ? imageName.toString()
+                        : 'No image Picked!'),
                   ],
                 ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Condition:', style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),),
-                  const SizedBox(width: 5,),
+                  const Text(
+                    'Condition:',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
                   DropdownButton<String>(
                     value: dropdownValue,
                     icon: const Icon(Icons.arrow_downward),
                     elevation: 16,
                     style: const TextStyle(color: Colors.deepPurple),
                     underline: Container(
-                      height: 2,
-                      color: Color.fromRGBO(174, 140, 199, 1.0)
-                    ),
+                        height: 2, color: const Color.fromRGBO(174, 140, 199, 1.0)),
                     isExpanded: false,
                     onChanged: (String? newValue) {
                       setState(() {
                         dropdownValue = newValue!;
                       });
                     },
-                    items: <String>['New', 'Used', 'LikeNew',]
-                        .map<DropdownMenuItem<String>>((String value) {
+                    items: <String>[
+                      'New',
+                      'Used',
+                      'LikeNew',
+                    ].map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value, style: const TextStyle(color: Colors.black87, fontSize:20 ),),
+                        child: Text(
+                          value,
+                          style: const TextStyle(
+                              color: Colors.black87, fontSize: 20),
+                        ),
                       );
                     }).toList(),
                   ),
                 ],
               ),
-              SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               SizedBox(
                 width: 100,
                 child: ElevatedButton(
@@ -193,7 +209,7 @@ class _AddProductState extends State<AddProduct> {
                       ),
                     ),
                     onPressed: () {
-                     addProduct();
+                      addProduct();
                     },
                     child: const Text("Submit")),
               ),
@@ -204,7 +220,9 @@ class _AddProductState extends State<AddProduct> {
           onPressed: () {
             // Navigator.push(
             //   context,
-            //   MaterialPageRoute(builder: (context) => ),
+            //   MaterialPageRoute(
+            //     builder: (context) => const Upcommingbooks(),
+            //   ),
             // );
           },
           backgroundColor: Colors.green,

@@ -3,13 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-
-import '../../../NotificationModel.dart';
+import '../../Models/NotificationModel.dart';
 import '../Message/Chatroom.dart';
 
-//import 'NotificationModel.dart';
-//import 'ip/ip_address.dart';
-//import 'messaging_page.dart';
 
 class Notifications extends StatefulWidget {
   const Notifications({Key? key}) : super(key: key);
@@ -191,7 +187,7 @@ class _NotificationsState extends State<Notifications> {
                                 children: [
                                   ListTile(
                                     leading: Text(
-                                      'title: \n'
+                                      'Title: \n'
                                           '${snapshot.data[index].title}',
                                       style: TextStyle(
                                         fontSize: 25,
@@ -202,7 +198,7 @@ class _NotificationsState extends State<Notifications> {
                                       ),
                                     ),
                                     title: Text(
-                                      'description: '
+                                      'Description: \n '
                                           '${snapshot.data[index].description}',
                                       style: const TextStyle(
                                           color: Color(0xFF003049),
@@ -255,7 +251,9 @@ class _NotificationsState extends State<Notifications> {
                                           width: 30,
                                         ),
                                         ElevatedButton(
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              print('rejectetd');
+                                            },
                                             child: const Text("decline"))
                                       ],
                                     ),
@@ -305,13 +303,6 @@ class _NotificationsState extends State<Notifications> {
                             ),
                             // color: Color(0xEAFFFFFF).withOpacity(0.2),
                             color: const Color(0xEAFFFFFF),
-
-                            // Card(
-                            //   shadowColor: Colors.black,
-                            //   shape: RoundedRectangleBorder(
-                            //       borderRadius: BorderRadius.circular(20.0)),
-                            //   elevation: 10,
-                            //   color: const Color(0xFFF1F1F1),
                             child: Center(
                               child: Column(children: [
                                 ListTile(

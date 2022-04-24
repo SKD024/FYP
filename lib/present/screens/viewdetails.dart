@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'package:bookbinnepal/NotificationModel.dart';
+import 'package:bookbinnepal/present/models/NotificationModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import '../../productmodel.dart';
-import '../../NotificationModel.dart';
+import '../models/productmodel.dart';
+import '../models/NotificationModel.dart';
 
 class DetailProduct extends StatefulWidget {
   final int id;
