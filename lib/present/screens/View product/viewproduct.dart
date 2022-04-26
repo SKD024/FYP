@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:bookbinnepal/present/Models/productmodel.dart';
+import '../Search.dart';
 import '../viewdetails.dart';
 
 class viewproduct extends StatefulWidget {
@@ -60,6 +61,16 @@ class _viewproductState extends State<viewproduct> {
           title: const Center(
             child: Text('View Books'),
           ),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  showSearch(context: context, delegate: SearchUser());
+                },
+                icon: const Icon(
+                  CupertinoIcons.search_circle_fill,
+                  size: 38,
+                ))
+          ],
           automaticallyImplyLeading: false,
         ),
         body: FutureBuilder(

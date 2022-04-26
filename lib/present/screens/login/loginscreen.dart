@@ -1,7 +1,7 @@
+import 'package:bookbinnepal/present/screens/login/forgetpassword.dart';
 import 'package:bookbinnepal/present/screens/signup/register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:back_button_interceptor/back_button_interceptor.dart';
 import '../homepage.dart';
 import '../verify.dart';
 
@@ -10,11 +10,10 @@ class loginpage extends StatefulWidget {
   loginpage({Key? key}) : super(key: key);
   static var emailcontroller = TextEditingController();
   static var passwordcontroller = TextEditingController();
-  //static String id = "login page";
-
   @override
   State<loginpage> createState() => _loginpageState();
 }
+
 
 class _loginpageState extends State<loginpage> {
 
@@ -25,37 +24,15 @@ class _loginpageState extends State<loginpage> {
   void validate() {
     if (formKey.currentState!.validate()) {
       login();
-      // Navigator.pushNamed(context, OTPVerification.id);
+
     } else {
-      final snackBar = SnackBar(content: Text('Please! fill all the field.'));
+      final snackBar = const SnackBar(content: const Text('Please! fill all the field.'));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
 
   bool value = false;
-  Map? _userData;
   String provider = '';
-  // facebookSignIn() async {
-  //   final LoginResult result = await FacebookAuth.instance.login();
-  //   if (result.status == LoginStatus.success) {
-  //     provider = 'facebook';
-  //     final userData = await FacebookAuth.i.getUserData(
-  //       fields: "email,name,id",
-  //     );
-  //     setState(() {
-  //       _userData = userData;
-  //     });
-  //     print(_userData);
-  //     print(provider);
-  //     //Navigator.pushNamed(context, GoogleMapScreen.id);
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute(builder: (context) => const Homepage()),
-  //     );
-  //   } else {
-  //     print('login unsuccessful');
-  //   }
-  // }
   login() async {
     try {
       await auth.signInWithEmailAndPassword(
@@ -66,36 +43,21 @@ class _loginpageState extends State<loginpage> {
       if (user.emailVerified) {
         Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Homepage()));
+            MaterialPageRoute(builder: (context) => const Homepage()));
       } else {
         Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => VerifyEmail()));
+        MaterialPageRoute(builder: (context) => const VerifyEmail()));
       }
     } on FirebaseAuthException catch (e) {
       final snackMessage = SnackBar(content: Text(e.message.toString()));
       ScaffoldMessenger.of(context).showSnackBar(snackMessage);
     }
   }
-  DateTime pre_backpress = DateTime.now();
+
 
   @override
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   BackButtonInterceptor.add(myInterceptor);
-  // }
-  //
-  // @override
-  // void dispose() {
-  //   BackButtonInterceptor.remove(myInterceptor);
-  //   super.dispose();
-  // }
-  //
-  // bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
-  //   print("BACK BUTTON!"); // Do some stuff.
-  //   return true;
-  // }
+
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
@@ -137,6 +99,12 @@ class _loginpageState extends State<loginpage> {
                       padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                       child: TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
                         controller: loginpage.emailcontroller,
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
@@ -164,6 +132,12 @@ class _loginpageState extends State<loginpage> {
                       padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                       child: TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
                         controller: loginpage.passwordcontroller,
                         obscureText: true,
                         style: TextStyle(
@@ -187,18 +161,24 @@ class _loginpageState extends State<loginpage> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
-                      children: const [
-                        // TextButton(
-                        //   onPressed: () {},
-                        //   child: Text(
-                        //     "Forgot password",
-                        //     style: TextStyle(
-                        //       fontSize: 20,
-                        //       fontWeight: FontWeight.bold,
-                        //       color: Theme.of(context).primaryColor,
-                        //     ),
-                        //   ),
-                        // ),
+                      children:  [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => ResetScreen()),
+                            );
+                          },
+                          child: const Text(
+                            "Forgot password?",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+
+
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                     const SizedBox(height: 10),
@@ -258,4 +238,5 @@ class _loginpageState extends State<loginpage> {
       ),
     );
   }
+
 }

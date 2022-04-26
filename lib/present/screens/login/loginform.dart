@@ -28,27 +28,27 @@ class _loginformState extends State<loginform> {
                 contentPadding:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
                 filled: true,
-                fillColor: Color.fromARGB(255, 236, 202, 255),
+                fillColor: const Color.fromARGB(255, 236, 202, 255),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
-                  borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
+                  borderSide: const BorderSide(color: const Color.fromARGB(255, 0, 0, 0)),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
-                  borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
+                  borderSide: const BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
-                  borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
+                  borderSide: const BorderSide(color: const Color.fromARGB(255, 0, 0, 0)),
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
             TextFormField(
               obscureText: _obscureText,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20,
                 color: Colors.black,
               ),
@@ -69,24 +69,24 @@ class _loginformState extends State<loginform> {
                   },
                 ),
                 contentPadding:
-                    EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
                 filled: true,
-                fillColor: Color.fromARGB(255, 236, 202, 255),
+                fillColor: const Color.fromARGB(255, 236, 202, 255),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
-                  borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
+                  borderSide: const BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
-                  borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
+                  borderSide: const BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
-                  borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
+                  borderSide: const BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
           ],

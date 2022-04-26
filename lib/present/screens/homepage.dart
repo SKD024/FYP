@@ -1,7 +1,6 @@
 import 'package:bookbinnepal/present/screens/profile/Profile.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-
 import 'Add product/addproduct.dart';
 import 'Message/Message.dart';
 import 'Notification/Notifications.dart';

@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import '../../Models/usermodel.dart';
+import '../Quizz/quiz.dart';
 import '../UpcoommingBooks/upcommingbooks.dart';
 import '../login/loginscreen.dart';
 
@@ -197,12 +198,12 @@ class _ProfileState extends State<Profile> {
                                       const Color.fromRGBO(174, 140, 199, 1.0)),
                                 ),
                                 onPressed: () {
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) => const Upcommingbooks(),
-                                  //   ),
-                                  // );
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const quiz(),
+                                    ),
+                                  );
                                 },
                                 child: const Text('Quiz')),
                           ],

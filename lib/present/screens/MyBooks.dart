@@ -1,9 +1,7 @@
 import 'dart:convert';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-
 import '../Models/productmodel.dart';
 import 'viewdetails.dart';
 
@@ -16,6 +14,8 @@ class MyBooks extends StatefulWidget {
 
 class _MyBooksState extends State<MyBooks> {
   String url = "http://10.0.2.2:8000/apis/v1/";
+  String deleteUrl ="http://10.0.2.2:8000/apis/v1";
+  String? deleteId;
   Future<List<ProductModel>> _getProductList() async {
     Response response = await get(
       Uri.parse(url),
@@ -44,6 +44,24 @@ class _MyBooksState extends State<MyBooks> {
 
     return productDetails;
   }
+  Future<Response> deleteProduct() async {
+    Response response = await delete(
+      Uri.parse('$deleteUrl/$deleteId/'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    if (response.statusCode == 204) {
+      const snackBar = SnackBar(content: Text('The Product has been deleted!'));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } else {
+      const snackBar =
+      SnackBar(content: Text('The Product could not be deleted!'));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+    return response;
+  }
   var currentuser = FirebaseAuth.instance.currentUser?.email;
   @override
   Widget build(BuildContext context) {
@@ -53,7 +71,7 @@ class _MyBooksState extends State<MyBooks> {
         appBar: AppBar(
           backgroundColor: const Color.fromRGBO(161, 78, 203, 1.0),
           title: const Center(child: Text('My Books')),
-          automaticallyImplyLeading: false,
+
         ),
         body: FutureBuilder(
           future: _getProductList(),
@@ -120,6 +138,14 @@ class _MyBooksState extends State<MyBooks> {
                                             fontSize: 18,
                                             fontWeight: FontWeight.w500),
                                       ),
+                                      trailing: IconButton(
+                                          icon: const Icon(Icons.delete,
+                                              color: Colors.black),
+                                          onPressed: () {
+                                            deleteId = snapshot.data[index].id.toString();
+                                            deleteProduct();
+
+                                          }),
                                     ),
                                   ),
                                 ),

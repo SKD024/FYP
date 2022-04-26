@@ -145,7 +145,6 @@ class _NotificationsState extends State<Notifications> {
           ),
         ));
   }
-
   Widget inboxpage() {
     return FutureBuilder(
         future: _getRequestList(),
@@ -173,15 +172,7 @@ class _NotificationsState extends State<Notifications> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
-                            // color: Color(0xEAFFFFFF).withOpacity(0.2),
                             color: const Color(0xEAFFFFFF),
-
-                            // Card(
-                            //   shadowColor: Colors.black,
-                            //   shape: RoundedRectangleBorder(
-                            //       borderRadius: BorderRadius.circular(20.0)),
-                            //   elevation: 10,
-                            //   color: const Color(0xFFF1F1F1),
                             child: Center(
                               child: Column(
                                 children: [
@@ -237,6 +228,7 @@ class _NotificationsState extends State<Notifications> {
                                     ),
                                   ] else ...[
                                     Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         ElevatedButton(
                                           // style: kButtonStyle,
@@ -273,7 +265,6 @@ class _NotificationsState extends State<Notifications> {
           }
         });
   }
-
   Widget outboxpage() {
     return FutureBuilder(
         future: _getRequestList(),
@@ -327,66 +318,14 @@ class _NotificationsState extends State<Notifications> {
                                         fontSize: 20,
                                         fontWeight: FontWeight.w600),
                                   ),
-                                  trailing: IconButton(
-                                      icon:
-                                      const Icon(Icons.delete, color: Colors.grey),
-                                      onPressed: () {
-                                        // deleteId = snapshot.data[index].id;
-                                        // deleteProduct();
-                                      }),
+                                  // trailing: IconButton(
+                                  //     icon:
+                                  //     const Icon(Icons.delete, color: Colors.grey),
+                                  //     onPressed: () {
+                                  //       deleteId = snapshot.data[index].id;
+                                  //       deleteProduct();
+                                  //     }),
                                 ),
-                                // if (snapshot.data[index].isAccepted ==
-                                //     true) ...[
-                                //   ElevatedButton(
-                                //     // style: kButtonStyle,
-                                //     onPressed: () async {
-                                //       await _firestore
-                                //           .collection('users')
-                                //           .where("email",
-                                //           isEqualTo: snapshot.data[index]
-                                //               .requestEmail)
-                                //           .get()
-                                //           .then((value) {
-                                //         setState(() {
-                                //           userMap = value.docs[0].data();
-                                //         });
-                                //       });
-                                //       String roomId = chatRoomId(
-                                //           _auth.currentUser!.email!,
-                                //           userMap!['email']);
-                                //       Navigator.of(context).push(
-                                //         MaterialPageRoute(
-                                //           builder: (_) => ChatRoom(
-                                //             chatRoomId: roomId,
-                                //             userMap: userMap!,
-                                //           ),
-                                //         ),
-                                //       );
-                                //     },
-                                //     child: const Text('Chat'),
-                                //   ),
-                                // ] else ...[
-                                //   Row(
-                                //     children: [
-                                //       ElevatedButton(
-                                //         // style: kButtonStyle,
-                                //         onPressed: () {
-                                //           updateId = snapshot.data[index].id
-                                //               .toString();
-                                //           updateProduct();
-                                //         },
-                                //         child: const Text("Accept"),
-                                //       ),
-                                //       const SizedBox(
-                                //         width: 30,
-                                //       ),
-                                //       ElevatedButton(
-                                //         // style:
-                                //         // kButtonStyleDecline,
-                                //           onPressed: () {},
-                                //           child: const Text("Decline"))
-                                //     ],
-                                //   ) ],
                               ] ),
                             ),
                           ),

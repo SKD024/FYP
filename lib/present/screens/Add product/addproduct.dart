@@ -1,7 +1,5 @@
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:bookbinnepal/present/screens/MyBooks.dart';
-import 'package:bookbinnepal/present/screens/UpcoommingBooks/upcommingbooks.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +7,6 @@ import 'package:http/http.dart';
 
 class AddProduct extends StatefulWidget {
   const AddProduct({Key? key}) : super(key: key);
-  static String id = "addproduct_page";
   static var title = TextEditingController();
   static var description = TextEditingController();
   static var genre = TextEditingController();
@@ -76,6 +73,16 @@ class _AddProductState extends State<AddProduct> {
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
+  final formKey = GlobalKey<FormState>();
+  void validate() {
+    if (formKey.currentState!.validate()) {
+      addProduct();
+
+    } else {
+      final snackBar = const SnackBar(content: const Text('Please! fill all the field.'));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,145 +95,166 @@ class _AddProductState extends State<AddProduct> {
           automaticallyImplyLeading: false,
         ),
         body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: TextFormField(
-                  controller: AddProduct.title,
-                  decoration: const InputDecoration(hintText: 'Title'),
-                  textInputAction: TextInputAction.next,
+          child: Form(
+            key: formKey,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                    controller: AddProduct.title,
+                    decoration: const InputDecoration(hintText: 'Title'),
+                    textInputAction: TextInputAction.next,
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: TextFormField(
-                  controller: AddProduct.description,
-                  decoration: const InputDecoration(hintText: 'Description'),
-                  textInputAction: TextInputAction.next,
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                    controller: AddProduct.description,
+                    decoration: const InputDecoration(hintText: 'Description'),
+                    textInputAction: TextInputAction.next,
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: TextFormField(
-                  controller: AddProduct.genre,
-                  decoration: const InputDecoration(hintText: 'Genre'),
-                  textInputAction: TextInputAction.next,
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                    controller: AddProduct.genre,
+                    decoration: const InputDecoration(hintText: 'Genre'),
+                    textInputAction: TextInputAction.next,
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: TextFormField(
-                  controller: AddProduct.author,
-                  decoration: const InputDecoration(hintText: 'Author'),
-                  textInputAction: TextInputAction.next,
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                    controller: AddProduct.author,
+                    decoration: const InputDecoration(hintText: 'Author'),
+                    textInputAction: TextInputAction.next,
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: TextFormField(
-                  controller: AddProduct.price,
-                  decoration: const InputDecoration(hintText: 'Price'),
-                  textInputAction: TextInputAction.done,
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                    controller: AddProduct.price,
+                    decoration: const InputDecoration(hintText: 'Price'),
+                    textInputAction: TextInputAction.done,
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(7.0),
-                child: Row(
+                Padding(
+                  padding: const EdgeInsets.all(7.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          uploadImage();
+                        },
+                        child: const Text('Select Image'),
+                      ),
+                      Text(pickedimage
+                          ? imageName.toString()
+                          : 'No image Picked!'),
+                    ],
+                  ),
+                ),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TextButton(
-                      onPressed: () {
-                        uploadImage();
-                      },
-                      child: const Text('Select Image'),
+                    const Text(
+                      'Condition:',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                     ),
-                    Text(pickedimage
-                        ? imageName.toString()
-                        : 'No image Picked!'),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    DropdownButton<String>(
+                      value: dropdownValue,
+                      icon: const Icon(Icons.arrow_downward),
+                      elevation: 16,
+                      style: const TextStyle(color: Colors.deepPurple),
+                      underline: Container(
+                          height: 2, color: const Color.fromRGBO(174, 140, 199, 1.0)),
+                      isExpanded: false,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          dropdownValue = newValue!;
+                        });
+                      },
+                      items: <String>[
+                        'New',
+                        'Used',
+                        'LikeNew',
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                            style: const TextStyle(
+                                color: Colors.black87, fontSize: 20),
+                          ),
+                        );
+                      }).toList(),
+                    ),
                   ],
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Condition:',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  DropdownButton<String>(
-                    value: dropdownValue,
-                    icon: const Icon(Icons.arrow_downward),
-                    elevation: 16,
-                    style: const TextStyle(color: Colors.deepPurple),
-                    underline: Container(
-                        height: 2, color: const Color.fromRGBO(174, 140, 199, 1.0)),
-                    isExpanded: false,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        dropdownValue = newValue!;
-                      });
-                    },
-                    items: <String>[
-                      'New',
-                      'Used',
-                      'LikeNew',
-                    ].map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: const TextStyle(
-                              color: Colors.black87, fontSize: 20),
+                const SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  width: 100,
+                  child: ElevatedButton(
+                      style: ButtonStyle(
+                        overlayColor: MaterialStateProperty.all<Color>(
+                          const Color(0x82050000),
                         ),
-                      );
-                    }).toList(),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              SizedBox(
-                width: 100,
-                child: ElevatedButton(
-                    style: ButtonStyle(
-                      overlayColor: MaterialStateProperty.all<Color>(
-                        const Color(0x82050000),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(7.0),
+                        )),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color.fromRGBO(174, 140, 199, 1.0),
+                        ),
                       ),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(7.0),
-                      )),
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color.fromRGBO(174, 140, 199, 1.0),
-                      ),
-                    ),
-                    onPressed: () {
-                      addProduct();
-                    },
-                    child: const Text("Submit")),
-              ),
-            ],
+                      onPressed: () {
+                        validate();
+                      },
+                      child: const Text("Submit")),
+                ),
+              ],
+            ),
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) => const Upcommingbooks(),
-            //   ),
-            // );
-          },
-          backgroundColor: Colors.green,
-          child: const Icon(Icons.navigation),
         ),
       ),
     );

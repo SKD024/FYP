@@ -1,10 +1,9 @@
 import 'dart:convert';
-
-import 'package:bookbinnepal/present/screens/login/loginscreen.dart';
 import 'package:bookbinnepal/present/screens/verify.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import '../../Models/usermodel.dart';
 
@@ -135,6 +134,12 @@ class _registerState extends State<register> {
                         padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
                           controller: register.econtroller,
                           style: TextStyle(
                             color: Theme.of(context).primaryColor,
@@ -163,6 +168,12 @@ class _registerState extends State<register> {
                         padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
                           controller: register.namecontroller,
                           style: TextStyle(
                             color: Theme.of(context).primaryColor,
@@ -191,6 +202,12 @@ class _registerState extends State<register> {
                         padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
                           controller: register.pcontroller,
                           obscureText: true,
                           style: TextStyle(
@@ -220,6 +237,16 @@ class _registerState extends State<register> {
                         padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
                           controller: register.phonecontroller,
                           style: TextStyle(
                             color: Theme.of(context).primaryColor,

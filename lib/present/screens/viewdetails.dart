@@ -71,7 +71,6 @@ class _DetailProductState extends State<DetailProduct> {
 
 
   requestProd() async {
-
     String requestUrl = "http://10.0.2.2:8000/apis/v1/request/";
     String? title = Rtitle;
     String? description= Rdescription;
@@ -98,7 +97,6 @@ class _DetailProductState extends State<DetailProduct> {
       postEmail:postEmail,
       isAccepted:false,
     );
-
     var response = await post(Uri.parse(requestUrl),
         body: json.encode(donor),
         headers: {'Content-Type': 'application/json'});
@@ -124,7 +122,7 @@ class _DetailProductState extends State<DetailProduct> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(Rtitle.toString()),
+        title: Center(child: Text(Rtitle.toString())),
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -197,28 +195,23 @@ class _DetailProductState extends State<DetailProduct> {
                           ),
                         ),
                         const SizedBox(height: 7,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text(
-                              isWaiting
-                                  ? '?'
-                                  : 'Genre: ${Rgenre.toString()}',
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              isWaiting
-                                  ? '?'
-                                  : 'Author: ${Rauthor.toString()}',
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
+                        Text(
+                          isWaiting
+                              ? '?'
+                              : 'Genre: ${Rgenre.toString()}',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          isWaiting
+                              ? '?'
+                              : 'Author: ${Rauthor.toString()}',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         const SizedBox(height: 5,),
                         Text(
