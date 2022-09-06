@@ -1,6 +1,6 @@
 # bookbinnepal
 
-A new Flutter project.
+Final Year project for my FYP. It uses flutter. 
 
 ## Getting Started
 
